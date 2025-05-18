@@ -1,0 +1,59 @@
+---
+import HtmlIcon from "./icons/Html.astro";
+
+const TAGS = {
+    HTML: {
+        name: "HTML",
+        class: "bg-white text-red-500",
+        icon: HtmlIcon,
+    },
+    CSS: {
+        name: "CSS",
+        class: "bg-blue-500 text-white",
+        icon: HtmlIcon,
+    },
+    JavaScript: {
+        name: "JavaScript",
+        class: "bg-yellow-500  text-white",
+        icon: HtmlIcon,
+    },
+};
+
+const PROYECTS = [
+    {
+        title: "Test UMH - Apartado de test de la Universidad Miguel Hernández",
+        description:
+            "Página web de test de la Universidad Miguel Hernández. En esta página se pueden realizar test de diferentes asignaturas y ver los resultados obtenidos.",
+        link: "https://coyotemmk.github.io/test-umh.github.io/",
+        github: "https://github.com/coyoteMMK/test-umh.github.io",
+        image: "/proyects/Test_UMH.webp",
+        tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript],
+    },
+];
+---
+
+{
+    PROYECTS.map(({ title, description, tags, image }) => (
+        <article>
+            <h3 class="text-2xl font-semibold text-yellow-200 mb-2">{title}</h3>
+            <p class="text-lg mb-4 text-pretty">{description}</p>
+            <ul class="flex gap-x-2 flex-row">
+                {tags.map((tag) => (
+                    <li>
+                        <span
+                            class={`flex text-xs gap-x-2 rounded-full ${tag.class} px-2 py-1 items-center justify-center`}
+                        >
+                            <tag.icon class="size-6" />
+                            {tag.name}
+                        </span>
+                    </li>
+                ))}
+            </ul>
+            <img
+                class="rounded shadow-2xl shadow-white/10"
+                src={image}
+                alt={`Captura de pantalla del proyecto ${image}`}
+            />
+        </article>
+    ))
+}
