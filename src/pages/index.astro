@@ -1,43 +1,53 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Badge from '../components/Badge.astro';
-import LinkedinIcon from '../components/icons/Linkedin.astro';
-import GithubIcon from '../components/icons/Github.astro';
-import MailIcon from '../components/icons/Mail.astro';
-import SocialPill from '../components/SocialPill.astro';
-import Hero from '../components/Hero.astro';
-import Experience from '../components/Experience.astro';
-import SectionContainer from '../components/SectionContainer.astro';
-import MaletinIcon from '../components/icons/Maletin.astro';
-import CodeIcon from '../components/icons/Code.astro';
-import Proyects from '../components/Proyects.astro';
+import Layout from "../layouts/Layout.astro";
+import Badge from "../components/Badge.astro";
+import LinkedinIcon from "../components/icons/Linkedin.astro";
+import GithubIcon from "../components/icons/Github.astro";
+import MailIcon from "../components/icons/Mail.astro";
+import SocialPill from "../components/SocialPill.astro";
+import Hero from "../components/Hero.astro";
+import Experience from "../components/Experience.astro";
+import SectionContainer from "../components/SectionContainer.astro";
+import MaletinIcon from "../components/icons/Maletin.astro";
+import CodeIcon from "../components/icons/Code.astro";
+import Proyects from "../components/Proyects.astro";
+import TitleSection from "../components/TitleSection.astro";
 ---
 
-
-
-<Layout 
+<Layout
 	title="Portfolio de Santos Bernabeu - Desarrollador y programador web"
 	description="Contrata a Santos Bernabeu, un desarrollador web con más de 15 años de experiencia en la creación de aplicaciones únicas y contenido digital. Con una sólida formación en programación y un enfoque en la innovación, Santos está listo para llevar tu proyecto al siguiente nivel."
 >
 	<main class="px-4">
 		<SectionContainer class="py-16 md:py-36">
-			<Hero>
-				</slot >
-			</Hero>
+			<Hero />
 		</SectionContainer>
 
-		<SectionContainer id="experiencia">
-			<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
-				<MaletinIcon class="size-7"/>
-				Experiencia laboral</h2>
-			<Experience />
-		</SectionContainer>
+		<div class="space-y-24">
+			<SectionContainer id="experiencia">
+				<TitleSection>
+					<MaletinIcon class="size-8" />
+					Experiencia laboral
+				</TitleSection>
+				<Experience />
+			</SectionContainer>
 
-		<SectionContainer id="proyectos">
-			<h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center">
-				<CodeIcon class="size-7"/>
-				Proyectos</h2>
-			<Proyects />
-		</SectionContainer>
+			<SectionContainer id="proyectos">
+				<TitleSection>
+					<CodeIcon class="size-7" />
+					Proyectos
+				</h2>
+				</TitleSection>
+				<Proyects />
+			</SectionContainer>
+
+			<SectionContainer id="sobre-mi">
+				<TitleSection>
+					<CodeIcon class="size-7" />
+					Sobre mí
+				</h2>
+				</TitleSection>
+			</SectionContainer>
+		</div>
 	</main>
 </Layout>
