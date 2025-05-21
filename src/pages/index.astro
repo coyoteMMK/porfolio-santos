@@ -1,10 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Badge from "../components/Badge.astro";
-import LinkedinIcon from "../components/icons/Linkedin.astro";
-import GithubIcon from "../components/icons/Github.astro";
-import MailIcon from "../components/icons/Mail.astro";
-import SocialPill from "../components/SocialPill.astro";
+import ProfileCheck from "../components/icons/ProfileCheck.astro";
 import Hero from "../components/Hero.astro";
 import Experience from "../components/Experience.astro";
 import SectionContainer from "../components/SectionContainer.astro";
@@ -12,6 +8,7 @@ import MaletinIcon from "../components/icons/Maletin.astro";
 import CodeIcon from "../components/icons/Code.astro";
 import Proyects from "../components/Proyects.astro";
 import TitleSection from "../components/TitleSection.astro";
+import Aboutme from "../components/Aboutme.astro";
 ---
 
 <Layout
@@ -43,10 +40,11 @@ import TitleSection from "../components/TitleSection.astro";
 
 			<SectionContainer id="sobre-mi">
 				<TitleSection>
-					<CodeIcon class="size-7" />
+					<ProfileCheck class="size-8" />
 					Sobre mí
 				</h2>
 				</TitleSection>
+				<Aboutme/>
 			</SectionContainer>
 		</div>
 	</main>
