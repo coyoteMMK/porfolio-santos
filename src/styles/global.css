@@ -3,26 +3,48 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
-    .header-nav {
-        @apply bg-white/50 dark:bg-gray-800/90;
-        animation: nav-shadown 1s linear both;
-        animation-timeline: scroll();
-        animation-range: 0 100px;
-    }
+  .header-nav {
+    @apply bg-white/50 dark:bg-gray-900/80;
+    animation: nav-shadown 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 0 200px;
+  }
 
-    @keyframes nav-shadown {
+  .dark .header-nav {
+    animation: nav-shadown-dark 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 0 200px;
+  }
+
+  @keyframes nav-shadown {
     0% {
-      background-color: rgba(255, 255, 255, 0); /* fallback for bg-white/0 */
+      background-color: rgba(255, 255, 255, 0);
     }
     to {
       box-shadow:
         0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -4px rgba(0, 0, 0, 0.1); /* shadow-lg */
-      backdrop-filter: blur(8px); /* backdrop-blur */
+        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(8px);
       box-shadow:
         0 0 0 1px rgba(255, 255, 255, 0.1),
         0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -4px rgba(0, 0, 0, 0.1); /* ring-white/10 + shadow-lg */
+        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  @keyframes nav-shadown-dark {
+    0% {
+      background-color: rgba(17, 24, 39, 0);
+    }
+    to {
+      box-shadow:
+        0 10px 15px -3px rgba(255, 255, 255, 0.1),
+        0 4px 6px -4px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.1),
+        0 10px 15px -3px rgba(255, 255, 255, 0.1),
+        0 4px 6px -4px rgba(255, 255, 255, 0.1);
     }
   }
 }

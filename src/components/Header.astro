@@ -25,26 +25,31 @@ const navItems = [
 ];
 ---
 
-<header
-  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2"
->
-  <nav
-    class="header-nav flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
-  >
-    {
-      navItems.map((link) => (
-        <a
-          class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500"
-          aria-label={link.label}
-          href={link.url}
-        >
-          {link.title}
-        </a>
-      ))
-    }
-    <ThemeToggle />
-  </nav>
-</header>
+<header class="header-nav top-0 z-10 fixed flex items-center justify-end w-full py-2">
+  <div class="flex items-center justify-between w-full mx-auto lg:max-w-4xl md:max-w-2xl text-sm font-medium text-gray-600 dark:text-gray-200 j">
+    <a class="font-normal text-lg text-gray-600 dark:text-gray-100 px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500" href="#"
+      ><strong>Portfolio</strong> Santos
+      
+      </a
+    >
+    <nav
+      class="flex justify-center items-center"
+    >
+      {
+        navItems.map((link) => (
+          <a
+            class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500"
+            aria-label={link.label}
+            href={link.url}
+          >
+            {link.title}
+          </a>
+        ))
+      }
+      <ThemeToggle />
+    </nav>
+  </div>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
