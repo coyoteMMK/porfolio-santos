@@ -25,20 +25,22 @@ const navItems = [
 ];
 ---
 
-<header class="header-nav top-0 z-10 fixed flex items-center justify-end w-full py-1 md:py-2">
-  <div class="flex items-center justify-center w-full mx-auto lg:max-w-4xl md:max-w-2xl text-sm font-medium text-gray-600 dark:text-gray-200 md:justify-between">
-    <a class="font-normal text-lg text-gray-600 dark:text-gray-100 px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500 hidden md:block" href="#" 
+<header
+  class="top-0 z-10 fixed flex items-center w-full py-1 md:py-2 justify-center mt-2 mx-auto"
+>
+  <div
+    class="header-nav px-3 flex items-center justify-center w-full mx-auto lg:max-w-4xl md:max-w-2xl text-sm font-medium text-gray-600 dark:text-gray-200 md:justify-between rounded-full"
+  >
+    <a
+      class="font-normal text-lg text-gray-600 dark:text-gray-100 px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500 hidden md:block"
+      href="#"
       ><strong>Portfolio</strong> Santos
-      
-      </a
-    >
-    <nav
-      class="flex justify-center items-center"
-    >
+    </a>
+    <nav class="flex justify-center h-full items-center">
       {
         navItems.map((link) => (
           <a
-            class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500"
+            class="relative  px-2 py-2 transition items-center flex justify-center hover:text-blue-500 dark:hover:text-blue-500"
             aria-label={link.label}
             href={link.url}
           >
@@ -49,46 +51,81 @@ const navItems = [
       <ThemeToggle />
     </nav>
   </div>
-
+</header>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section");
-    const navItems = document.querySelectorAll("header nav a");
+    const navItems = Array.from(document.querySelectorAll("header nav a"));
 
-    const callback = (entries: any[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navItems.forEach((item) => {
-            if (item.getAttribute("aria-label") == entry.target.id) {
-              item.classList.add("text-blue-500");
-            } else {
-              item.classList.remove("text-blue-500");
-            }
-          });
+    const navMap = new Map(
+      navItems.map((link) => [link.getAttribute("aria-label"), link])
+    );
+
+    let currentActive = null;
+
+    const clearActiveLinks = () => {
+      navItems.forEach((link) => link.classList.remove("active-navitem"));
+      currentActive = null;
+    };
+
+    const updateActiveLink = () => {
+      // Si estamos en el top de la página
+      if (window.scrollY === 0) {
+        clearActiveLinks();
+        return;
+      }
+
+      let closestSection = null;
+      let minTop = Infinity;
+      let allSectionsBelow = true;
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+
+        if (rect.top <= 200) {
+          allSectionsBelow = false;
+        }
+
+        if (rect.top >= 0 && rect.top < 200 && rect.top < minTop) {
+          closestSection = section;
+          minTop = rect.top;
         }
       });
-    };
 
-    const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.3,
-    });
+      if (allSectionsBelow) {
+        clearActiveLinks();
+        return;
+      }
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+      if (closestSection) {
+        const id = closestSection.id;
+        const matchingLink = navMap.get(id);
 
-    // Cleanup function
-    document.onvisibilitychange = () => {
-      if (document.visibilityState === "hidden") {
-        observer.disconnect();
-      } else {
-        sections.forEach((section) => {
-          observer.observe(section);
-        });
+        if (matchingLink && matchingLink !== currentActive) {
+          clearActiveLinks();
+          matchingLink.classList.add("active-navitem");
+          currentActive = matchingLink;
+        }
+      } else if (
+        window.scrollY + window.innerHeight >= document.body.scrollHeight
+      ) {
+        const lastSection = sections[sections.length - 1];
+        const lastLink = navMap.get(lastSection.id);
+        if (lastLink && lastLink !== currentActive) {
+          clearActiveLinks();
+          lastLink.classList.add("active-navitem");
+          currentActive = lastLink;
+        }
       }
     };
+
+    window.addEventListener("scroll", () => {
+      window.requestAnimationFrame(updateActiveLink);
+    });
+
+    window.addEventListener("resize", updateActiveLink);
+    updateActiveLink();
   });
 </script>
+

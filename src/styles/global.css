@@ -2,9 +2,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+
 @layer components {
   .header-nav {
-    @apply bg-white/50 dark:bg-gray-900/80;
+    @apply bg-white/25 backdrop-blur-xs rounded-2xl border border-white/35 shadow-lg h-15 dark:bg-gray-900/25;
     animation: nav-shadown 1s linear both;
     animation-timeline: scroll();
     animation-range: 0 200px;
@@ -16,36 +17,65 @@
     animation-range: 0 200px;
   }
 
+  .active-navitem {
+    @apply text-blue-500 text-center h-3/4 flex items-center px-4;
+    position: relative;
+    border-radius: 9999px;
+    transition: all 0.2s;
+  }
+
+  .active-navitem::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.055);
+    /* sombra circular transparente */
+    z-index: -1;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(15, 15, 15, 0.514);
+    transition: background 0.2s;
+  }
+
   @keyframes nav-shadown {
     0% {
       background-color: rgba(255, 255, 255, 0);
+      box-shadow: none;
+      backdrop-filter: blur(0px);
+      border-width: 0px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0);
     }
+
     to {
-      box-shadow:
-        0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -4px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(8px);
-      box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(7px);
+      border-width: 2px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.35);
     }
   }
 
   @keyframes nav-shadown-dark {
     0% {
       background-color: rgba(17, 24, 39, 0);
+      /* totalmente transparente */
+      box-shadow: none;
+      backdrop-filter: blur(0px);
+      border-width: 0px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0);
     }
+
     to {
-      box-shadow:
-        0 10px 15px -3px rgba(255, 255, 255, 0.1),
-        0 4px 6px -4px rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.1),
-        0 10px 15px -3px rgba(255, 255, 255, 0.1),
-        0 4px 6px -4px rgba(255, 255, 255, 0.1);
+      background-color: rgba(17, 24, 39, 0.733);
+      /* glass visible en dark */
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(7px);
+      border-width: 2px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.35);
     }
   }
 }
-
