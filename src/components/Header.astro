@@ -17,114 +17,158 @@ const navItems = [
     label: "sobre-mi",
     url: "/porfolio-santos/#sobre-mi",
   },
-  {
-    title: "Contacto",
-    label: "contacto",
-    url: "mailto:santosbaden@gmail.com",
-  },
 ];
 ---
 
 <header
-  class="top-0 z-10 fixed flex items-center w-full py-1 md:py-2 justify-center mt-2 mx-auto"
+  class="fixed top-0 z-10 w-full py-1 md:py-2 font-medium
+         text-gray-800 dark:text-blue-200 bg-transparent px-4"
 >
   <div
-    class="header-nav px-3 flex items-center justify-center w-full mx-auto lg:max-w-4xl md:max-w-2xl text-sm font-medium text-gray-600 dark:text-gray-200 md:justify-between rounded-full"
+    class="flex items-center justify-between
+           w-full mx-auto
+           md:max-w-2xl lg:max-w-4xl"
   >
-    <a
-      class="font-normal text-lg text-gray-600 dark:text-gray-100 px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500 hidden md:block"
-      href="#"
-      ><strong>Portfolio</strong> Santos
-    </a>
-    <nav class="flex justify-center h-full items-center">
-      {
-        navItems.map((link) => (
+    <!-- Nav cristal líquido -->
+    <div
+      class="header-nav efecto-cristal
+             flex items-center md:justify-between justify-evenly
+             text-sm font-medium text-gray-800 dark:text-gray-200
+             rounded-full w-full md:flex-1 px-3 h-9 md:h-11"
+    >
+      <a
+        href="#"
+        class="hidden md:block font-normal text-lg
+               text-gray-800 dark:text-gray-100
+                transition hover:text-rose-500"
+      >
+        <strong>Portfolio</strong> Santos
+      </a>
+      <nav class="relative flex items-center space-x-4 h-9/10">
+
+        {navItems.map((link) => (
           <a
-            class="relative  px-2 py-2 transition items-center flex justify-center hover:text-blue-500 dark:hover:text-blue-500"
-            aria-label={link.label}
             href={link.url}
+            aria-label={link.label}
+            class="relative  transition
+                   hover:text-rose-500 dark:hover:text-rose-500"
           >
             {link.title}
           </a>
-        ))
-      }
-      <ThemeToggle />
-    </nav>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Ya no hace falta el <div> extra: aplicamos las clases directamente -->
+    <ThemeToggle
+      class="header-nav efecto-cristal md:p-3 p-2 ml-4"
+    />
   </div>
 </header>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll("section");
-    const navItems = Array.from(document.querySelectorAll("header nav a"));
 
-    const navMap = new Map(
-      navItems.map((link) => [link.getAttribute("aria-label"), link])
-    );
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav      = document.querySelector('header nav');
+    const navLinks = Array.from(nav.querySelectorAll('a'));
+    const sections = document.querySelectorAll('section[id]');
+
+    // 1) Creamos e inyectamos el indicador
+    const indicator = document.createElement('span');
+    indicator.className = 'nav-indicator';
+    nav.insertBefore(indicator, nav.firstChild);
 
     let currentActive = null;
 
-    const clearActiveLinks = () => {
-      navItems.forEach((link) => link.classList.remove("active-navitem"));
-      currentActive = null;
-    };
+    // 2) Función que desplaza el indicador a un enlace dado
+    function moveIndicator(link) {
+      const linkRect = link.getBoundingClientRect();
+      const navRect  = nav.getBoundingClientRect();
+      const offsetX  = linkRect.left - navRect.left;
+      indicator.style.width     = `${linkRect.width}px`;
+      indicator.style.transform = `translateX(${offsetX}px)`;
+    }
 
-    const updateActiveLink = () => {
-      // Si estamos en el top de la página
+    // 3) Marca un enlace como activo (añade clase + mueve indicador)
+    function setActiveLink(link) {
+      if (!link || link === currentActive) return;
+      navLinks.forEach(l => l.classList.remove('active-navitem'));
+      link.classList.add('active-navitem');
+      moveIndicator(link);
+      currentActive = link;
+    }
+
+    // 4) Detecta la sección en viewport y activa su enlace
+    function updateActiveLink() {
       if (window.scrollY === 0) {
-        clearActiveLinks();
+        currentActive = null;
+        navLinks.forEach(l => l.classList.remove('active-navitem'));
+        indicator.style.width = '0';
         return;
       }
 
-      let closestSection = null;
-      let minTop = Infinity;
-      let allSectionsBelow = true;
-
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-
-        if (rect.top <= 200) {
-          allSectionsBelow = false;
-        }
-
-        if (rect.top >= 0 && rect.top < 200 && rect.top < minTop) {
-          closestSection = section;
-          minTop = rect.top;
+      let closest       = null;
+      let minDistance   = Infinity;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top >= 0 && top < 200 && top < minDistance) {
+          minDistance = top;
+          closest     = sec;
         }
       });
 
-      if (allSectionsBelow) {
-        clearActiveLinks();
-        return;
+      if (!closest && window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+        closest = sections[sections.length - 1];
       }
-
-      if (closestSection) {
-        const id = closestSection.id;
-        const matchingLink = navMap.get(id);
-
-        if (matchingLink && matchingLink !== currentActive) {
-          clearActiveLinks();
-          matchingLink.classList.add("active-navitem");
-          currentActive = matchingLink;
-        }
-      } else if (
-        window.scrollY + window.innerHeight >= document.body.scrollHeight
-      ) {
-        const lastSection = sections[sections.length - 1];
-        const lastLink = navMap.get(lastSection.id);
-        if (lastLink && lastLink !== currentActive) {
-          clearActiveLinks();
-          lastLink.classList.add("active-navitem");
-          currentActive = lastLink;
-        }
+      if (closest) {
+        const link = navLinks.find(a => a.getAttribute('aria-label') === closest.id);
+        setActiveLink(link);
       }
-    };
+    }
 
-    window.addEventListener("scroll", () => {
-      window.requestAnimationFrame(updateActiveLink);
+    // 5) Click en enlace: scroll suave + mover indicador
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+
+      const id = href.slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      // Si ya estamos en esa sección, deja que el browser haga su scroll normal
+      if (window.location.hash === href) return;
+
+      e.preventDefault();
+
+      // Calcula altura del header fijo
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+
+      // Calcula posición absoluta del target
+      const targetRect = target.getBoundingClientRect();
+      const scrollTop = window.scrollY + targetRect.top - headerHeight;
+
+      // Hace el scroll
+      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+
+      // Cambia el hash de la URL después de un pequeño delay
+      setTimeout(() => {
+        history.replaceState(null, '', href);
+      }, 400);
     });
+  });
 
-    window.addEventListener("resize", updateActiveLink);
+
+
+
+    // 6) Listeners scroll/resize
+    window.addEventListener('scroll', () => {
+      window.requestAnimationFrame(updateActiveLink);
+    }, { passive: true });
+    window.addEventListener('resize', updateActiveLink, { passive: true });
+
+    // 7) Inicial
     updateActiveLink();
   });
 </script>
