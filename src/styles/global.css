@@ -4,9 +4,10 @@
 
 @layer components {
 
-  :root{
-    --glass-distortion-url: '/porfolio-santos/#glass-distortion';
-  }
+  :root {
+  --glass-distortion-url: url('#glass-distortion');
+}
+
 
   /* Efecto cristal líquido */
   .efecto-cristal {
