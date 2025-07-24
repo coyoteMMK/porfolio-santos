@@ -5,7 +5,7 @@
 @layer components {
 
   :root {
-  --glass-distortion-url: url('#glass-distortion');
+  --glass-distortion-url: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22glass-distortion%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.005%200.009%22%20numOctaves%3D%222%22%20seed%3D%2292%22%20result%3D%22noise%22%2F%3E%3CfeGaussianBlur%20in%3D%22noise%22%20stdDeviation%3D%222%22%20result%3D%22blurred%22%2F%3E%3CfeDisplacementMap%20in%3D%22SourceGraphic%22%20in2%3D%22blurred%22%20scale%3D%2255%22%20xChannelSelector%3D%22R%22%20yChannelSelector%3D%22G%22%2F%3E%3C%2Ffilter%3E%3C%2Fsvg%3E#glass-distortion");
 }
 
 
