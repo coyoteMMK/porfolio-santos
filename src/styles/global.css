@@ -24,10 +24,13 @@
     inset: 0;
     z-index: -7;
     border-radius: inherit;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    filter: var(--glass-distortion-url);
-    -webkit-filter: var(--glass-distortion-url);
+    /* Aplica el blur y la distorsión al fondo */
+  backdrop-filter: blur(2px) var(--glass-distortion-url);
+  -webkit-backdrop-filter: blur(2px) var(--glass-distortion-url);
+
+  /* Elimina las líneas filter, no son necesarias aquí */
+  /* filter: var(--glass-distortion-url); */
+  /* -webkit-filter: var(--glass-distortion-url); */
   }
 
   .efecto-cristal::before {
@@ -84,9 +87,8 @@
     }
 
     to {
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      filter: var(--glass-distortion-url);
+      backdrop-filter: blur(2px) var(--glass-distortion-url);
+  -webkit-backdrop-filter: blur(2px) var(--glass-distortion-url);
     }
   }
 
@@ -151,9 +153,8 @@
     }
 
     to {
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      filter: var(--glass-distortion-url);
+      backdrop-filter: blur(2px) var(--glass-distortion-url);
+  -webkit-backdrop-filter: blur(2px) var(--glass-distortion-url);
     }
   }
 
