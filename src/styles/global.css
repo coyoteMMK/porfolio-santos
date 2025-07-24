@@ -4,6 +4,10 @@
 
 @layer components {
 
+  :root{
+    --glass-distortion-url: '/porfolio-santos/#glass-distortion';
+  }
+
   /* Efecto cristal líquido */
   .efecto-cristal {
     position: relative;
@@ -21,8 +25,8 @@
     border-radius: inherit;
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
-    filter: url(#glass-distortion);
-    -webkit-filter: url("#glass-distortion");
+    filter: var(--glass-distortion-url);
+    -webkit-filter: var(--glass-distortion-url);
   }
 
   .efecto-cristal::before {
@@ -81,7 +85,7 @@
     to {
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
-      filter: url(#glass-distortion);
+      filter: var(--glass-distortion-url);
     }
   }
 
@@ -148,7 +152,7 @@
     to {
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
-      filter: url(#glass-distortion);
+      filter: var(--glass-distortion-url);
     }
   }
 
