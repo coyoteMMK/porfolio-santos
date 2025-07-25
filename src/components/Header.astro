@@ -81,7 +81,6 @@ const navItems = [
     let currentActive = null;
     let indicatorHidden = true; // Para saber si el indicador está oculto
     let firstRun = true;
-    
 
     function moveIndicator(link) {
       const paddingX = 12;
@@ -94,55 +93,62 @@ const navItems = [
     }
 
     function setActiveLink(link) {
-  if (!link || link === currentActive) return;
+      if (!link || link === currentActive) return;
 
-  const isFirstLink = link === navLinks[0];
+      const isFirstLink = link === navLinks[0];
 
-  navLinks.forEach((l) => l.classList.remove("active-navitem"));
-  link.classList.add("active-navitem");
+      navLinks.forEach((l) => l.classList.remove("active-navitem"));
+      link.classList.add("active-navitem");
 
-  // Si es el primer render y es el primer link, muestra sin transición
-  if (isFirstLink && indicatorHidden) {
-    indicator.classList.remove("fade-out");
-    indicator.classList.remove("fade-in");
-    indicator.classList.add("fade-in");
+      // Si es el primer render y es el primer link, muestra sin transición
+      if (isFirstLink && indicatorHidden) {
+        indicator.classList.remove("fade-out");
+        indicator.classList.remove("fade-in");
+        indicator.classList.add("fade-in");
 
         // Desactiva transiciones momentáneamente
-    const prevTransition = indicator.style.transition;
-    indicator.style.transition = "none";
-    moveIndicator(link);
-    // Fuerza reflow para que el cambio tenga efecto
-    void indicator.offsetWidth;
-    // Restaura la transición original (de CSS)
-    indicator.style.transition = prevTransition;
+        const prevTransition = indicator.style.transition;
+        indicator.style.transition = "none";
+        moveIndicator(link);
+        // Fuerza reflow para que el cambio tenga efecto
+        void indicator.offsetWidth;
+        // Restaura la transición original (de CSS)
+        indicator.style.transition = prevTransition;
+      } else {
+        indicator.classList.remove("fade-in");
+        moveIndicator(link);
+      }
 
-
-  } else {
-    indicator.classList.remove("fade-in");
-    moveIndicator(link);
-  }
-
-  currentActive = link;
-  indicatorHidden = false;
-  firstRun = false;
-}
-
+      currentActive = link;
+      indicatorHidden = false;
+      firstRun = false;
+    }
 
     function updateActiveLink() {
       if (window.scrollY === 0) {
-        // Oculta el indicador cuando se hace scroll al top
         currentActive = null;
         navLinks.forEach((l) => l.classList.remove("active-navitem"));
 
-        // Solo aplica fade-out si el indicador está visible (width > 0)
         const currentWidth = indicator.offsetWidth;
 
-        indicator.classList.remove("fade-in");
-        indicator.classList.remove("fade-out");
-        void indicator.offsetWidth; // forzar reflow
-        indicator.classList.add("fade-out");
+        if (currentWidth > 0) {
+          indicator.style.setProperty("--prev-width", `${currentWidth}px`);
 
-        indicatorHidden = true;
+          indicator.classList.remove("fade-in");
+          indicator.classList.remove("fade-out");
+          void indicator.offsetWidth;
+          indicator.classList.add("fade-out");
+
+          // Finaliza el ocultamiento del indicador después del fade
+          setTimeout(() => {
+            indicator.style.opacity = "0";
+            indicator.style.width = "0";
+            indicatorHidden = true;
+          }, 300);
+        } else {
+          indicatorHidden = true;
+        }
+
         return;
       }
 
