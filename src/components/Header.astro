@@ -27,7 +27,7 @@ const navItems = [
 >
   <div
     class="flex items-center justify-between
-           w-full mx-auto
+           w-full mx-auto text-gray-800 dark:text-gray-200
            md:max-w-2xl lg:max-w-4xl"
   >
     <!-- Nav cristal líquido -->
@@ -47,9 +47,9 @@ const navItems = [
       </a>
       <nav class="relative flex items-center space-x-4 h-9/10">
         <span
-        id="nav-indicator"
-  class="absolute bottom-0 h-full bg-[rgba(122,122,122,0.322)] rounded-full transition-[transform,width] duration-300 ease-in-out z-0 w-0 pointer-events-none"
-></span>
+          id="nav-indicator"
+          class="absolute bottom-0 h-full bg-[rgba(122,122,122,0.322)] rounded-full transition-[transform,width] dark:bg-[rgba(255,255,255,0.59)] duration-300 ease-in-out z-0 w-0 pointer-events-none"
+        ></span>
         {
           navItems.map((link) => (
             <a
@@ -64,9 +64,10 @@ const navItems = [
         }
       </nav>
     </div>
-
-    <!-- Ya no hace falta el <div> extra: aplicamos las clases directamente -->
-    <ThemeToggle class="header-nav efecto-cristal md:p-3 p-2 ml-4" />
+    <div class="header-nav efecto-cristal md:p-3 p-2 ml-4">
+      <!-- Ya no hace falta el <div> extra: aplicamos las clases directamente -->
+      <ThemeToggle />
+    </div>
   </div>
 </header>
 
@@ -75,16 +76,13 @@ const navItems = [
     const nav = document.querySelector("header nav");
     const navLinks = Array.from(nav.querySelectorAll("a"));
     const sections = document.querySelectorAll("section[id]");
-
-    // 1) Seleccionamos el indicador ya existente en el DOM
-    const indicator = document.getElementById('nav-indicator');
+    const indicator = document.getElementById("nav-indicator");
 
     let currentActive = null;
+    let indicatorHidden = true; // Para saber si el indicador está oculto
 
-    // 2) Función que desplaza el indicador a un enlace dado
     function moveIndicator(link) {
-      const paddingX = 12; // ancho extra a cada lado (en px)
-
+      const paddingX = 12;
       const linkRect = link.getBoundingClientRect();
       const navRect = nav.getBoundingClientRect();
       const offsetX = linkRect.left - navRect.left - paddingX;
@@ -93,26 +91,41 @@ const navItems = [
       indicator.style.transform = `translateX(${offsetX}px)`;
     }
 
-    // 3) Marca un enlace como activo (añade clase + mueve indicador)
     function setActiveLink(link) {
       if (!link || link === currentActive) return;
+
+      const isFirstLink = link === navLinks[0];
+
       navLinks.forEach((l) => l.classList.remove("active-navitem"));
       link.classList.add("active-navitem");
+
+      // Fade-in solo si es el primer enlace y el indicador estaba oculto
+      if (isFirstLink && indicatorHidden) {
+        indicator.classList.remove("fade-in"); // reinicia si ya estaba
+        void indicator.offsetWidth; // fuerza reflow
+        indicator.classList.add("fade-in");
+      } else {
+        indicator.classList.remove("fade-in");
+      }
+
       moveIndicator(link);
       currentActive = link;
+      indicatorHidden = false;
     }
 
-    // 4) Detecta la sección en viewport y activa su enlace
     function updateActiveLink() {
       if (window.scrollY === 0) {
+        // Oculta el indicador cuando se hace scroll al top
         currentActive = null;
         navLinks.forEach((l) => l.classList.remove("active-navitem"));
         indicator.style.width = "0";
+        indicatorHidden = true;
         return;
       }
 
       let closest = null;
       let minDistance = Infinity;
+
       sections.forEach((sec) => {
         const top = sec.getBoundingClientRect().top;
         if (top >= 0 && top < 200 && top < minDistance) {
@@ -127,6 +140,7 @@ const navItems = [
       ) {
         closest = sections[sections.length - 1];
       }
+
       if (closest) {
         const link = navLinks.find(
           (a) => a.getAttribute("aria-label") === closest.id,
@@ -135,7 +149,7 @@ const navItems = [
       }
     }
 
-    // 5) Click en enlace: scroll suave + mover indicador
+    // Smooth scroll + actualización de estado al hacer click
     navLinks.forEach((link) => {
       link.addEventListener("click", function (e) {
         const href = link.getAttribute("href");
@@ -168,7 +182,7 @@ const navItems = [
       });
     });
 
-    // 6) Listeners scroll/resize
+    // Scroll y resize listeners
     window.addEventListener(
       "scroll",
       () => {
@@ -176,9 +190,10 @@ const navItems = [
       },
       { passive: true },
     );
+
     window.addEventListener("resize", updateActiveLink, { passive: true });
 
-    // 7) Inicial
+    // Inicializa el estado activo
     updateActiveLink();
   });
 </script>
@@ -275,7 +290,7 @@ const navItems = [
     }
 
     to {
-      background-color: rgba(75, 74, 74, 0.26);
+      background-color: rgba(32, 32, 32, 0.322);
       box-shadow: inset 0 0 1.5px 1.5px rgb(0, 0, 0);
     }
   }
@@ -286,5 +301,26 @@ const navItems = [
     color: #ff1818;
     transition: all 0.2s;
   }
-  
+
+  #nav-indicator.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  #nav-indicator.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      width: 0;
+    }
+  }
 </style>

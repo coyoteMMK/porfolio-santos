@@ -6,8 +6,9 @@ const { class: className} = Astro.props
 ---
 <button
   id="theme-toggle-btn"
-  class={`relative appearance-none flex hover:scale-125 transition ${className}`}
+  class={`relative flex hover:scale-125 transition ${className}`}
 >
+
   <span class="sr-only">Alternar tema</span>
   <SunIcon
     id="light"
@@ -63,3 +64,4 @@ const { class: className} = Astro.props
       applyTheme();
     });
 </script>
+
