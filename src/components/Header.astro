@@ -80,6 +80,8 @@ const navItems = [
 
     let currentActive = null;
     let indicatorHidden = true; // Para saber si el indicador está oculto
+    let firstRun = true;
+    
 
     function moveIndicator(link) {
       const paddingX = 12;
@@ -92,33 +94,54 @@ const navItems = [
     }
 
     function setActiveLink(link) {
-      if (!link || link === currentActive) return;
+  if (!link || link === currentActive) return;
 
-      const isFirstLink = link === navLinks[0];
+  const isFirstLink = link === navLinks[0];
 
-      navLinks.forEach((l) => l.classList.remove("active-navitem"));
-      link.classList.add("active-navitem");
+  navLinks.forEach((l) => l.classList.remove("active-navitem"));
+  link.classList.add("active-navitem");
 
-      // Fade-in solo si es el primer enlace y el indicador estaba oculto
-      if (isFirstLink && indicatorHidden) {
-        indicator.classList.remove("fade-in"); // reinicia si ya estaba
-        void indicator.offsetWidth; // fuerza reflow
-        indicator.classList.add("fade-in");
-      } else {
-        indicator.classList.remove("fade-in");
-      }
+  // Si es el primer render y es el primer link, muestra sin transición
+  if (isFirstLink && indicatorHidden) {
+    indicator.classList.remove("fade-out");
+    indicator.classList.remove("fade-in");
+    indicator.classList.add("fade-in");
 
-      moveIndicator(link);
-      currentActive = link;
-      indicatorHidden = false;
-    }
+        // Desactiva transiciones momentáneamente
+    const prevTransition = indicator.style.transition;
+    indicator.style.transition = "none";
+    moveIndicator(link);
+    // Fuerza reflow para que el cambio tenga efecto
+    void indicator.offsetWidth;
+    // Restaura la transición original (de CSS)
+    indicator.style.transition = prevTransition;
+
+
+  } else {
+    indicator.classList.remove("fade-in");
+    moveIndicator(link);
+  }
+
+  currentActive = link;
+  indicatorHidden = false;
+  firstRun = false;
+}
+
 
     function updateActiveLink() {
       if (window.scrollY === 0) {
         // Oculta el indicador cuando se hace scroll al top
         currentActive = null;
         navLinks.forEach((l) => l.classList.remove("active-navitem"));
-        indicator.style.width = "0";
+
+        // Solo aplica fade-out si el indicador está visible (width > 0)
+        const currentWidth = indicator.offsetWidth;
+
+        indicator.classList.remove("fade-in");
+        indicator.classList.remove("fade-out");
+        void indicator.offsetWidth; // forzar reflow
+        indicator.classList.add("fade-out");
+
         indicatorHidden = true;
         return;
       }
@@ -320,7 +343,6 @@ const navItems = [
   @keyframes fadeOut {
     to {
       opacity: 0;
-      width: 0;
     }
   }
 </style>
