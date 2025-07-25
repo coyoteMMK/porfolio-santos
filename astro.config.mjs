@@ -9,5 +9,5 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   site: 'https://coyotemmk.github.io/',
-  base: 'porfolio-santos',
+  base: '/porfolio-santos/',
 });

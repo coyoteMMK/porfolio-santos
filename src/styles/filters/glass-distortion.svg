@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg">
+  <filter id="glass-distortion">
+    <feTurbulence type="turbulence" baseFrequency="0.08" numOctaves="3" result="t"/>
+    <feGaussianBlur in="t" stdDeviation="3" result="blur"/>
+    <feDisplacementMap in2="blur" in="SourceGraphic" scale="10"/>
+  </filter>
+</svg>

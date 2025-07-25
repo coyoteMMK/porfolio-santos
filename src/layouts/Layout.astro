@@ -34,16 +34,7 @@ const { description, title } = Astro.props;
     >
     </div>
 
-    <!-- FILTRO SVG PARA DISTORSIÓN -->
-    <svg aria-hidden="true" class="absolute w-0 h-0 overflow-hidden">
-      <defs>
-        <filter id="glass-distortion">
-          <feTurbulence type="fractalNoise" baseFrequency="0.005 0.009" numOctaves="2" seed="92" result="noise"/>
-          <feGaussianBlur in="noise" stdDeviation="2" result="blurred"/>
-          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="55" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>
-      </defs>
-    </svg>
+   
 
     <Header />
     <slot />
