@@ -3,46 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
-
   
-
-  /* Efecto cristal líquido */
-  .efecto-cristal {
-    position: relative;
-    isolation: isolate;
-    border-radius: 1.75rem;
-    /* 28px */
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-  }
-
-  .efecto-cristal::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    filter: url("./filters/glass-distortion.svg#glass-distortion");
-    -webkit-filter: url("./filters/glass-distortion.svg#glass-distortion");
-  }
-
-  .efecto-cristal::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 0 20px -5px #ffffff;
-    background-color: rgba(255, 255, 255, 0.06);
-  }
-
-  /* Asegura que el contenido quede por encima del pseudo-elemento */
-  .efecto-cristal>* {
-    position: relative;
-    z-index: 2;
-  }
-
   /* Animaciones ligadas al scroll */
   .header-nav.efecto-cristal {
     animation: box-shadow-show 1s linear both;
@@ -62,43 +23,6 @@
     animation-range: 0 200px;
   }
 
-  /* Animaciones para el efecto cristal líquido del scroll */
-  @keyframes box-shadow-show {
-    from {
-      box-shadow: none;
-    }
-
-    to {
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.336);
-    }
-  }
-
-  @keyframes liquid-show {
-    from {
-      backdrop-filter: blur(0);
-      -webkit-backdrop-filter: blur(0);
-      filter: none;
-    }
-
-    to {
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      filter: url("/porfolio-santos/filters/glass-distortion.svg#glass-distortion");
-    }
-  }
-
-  @keyframes tint-show {
-    from {
-      background-color: rgba(255, 255, 255, 0);
-      box-shadow: none;
-    }
-
-    to {
-      background-color: rgba(255, 255, 255, 0.418);
-      box-shadow: inset 0 0 1.5px 1.5px #ffffff;
-    }
-  }
-
   /* Versión Oscura: animaciones ligadas al scroll SOLO en modo dark */
   .dark .header-nav.efecto-cristal {
     animation: box-shadow-show-dark 1s linear both;
@@ -110,86 +34,6 @@
     animation: tint-show-dark 1s linear both;
     animation-timeline: scroll();
     animation-range: 0 200px;
-  }
-
-  .dark .header-nav.efecto-cristal::after {
-    animation: liquid-show-dark 1s linear both;
-    animation-timeline: scroll();
-    animation-range: 0 200px;
-  }
-
-  @keyframes box-shadow-show-dark {
-    from {
-      box-shadow: none;
-    }
-
-    to {
-      box-shadow: 0 6px 24px rgba(136, 136, 136, 0.18);
-    }
-  }
-
-  @keyframes tint-show-dark {
-    from {
-      background-color: rgba(17, 24, 39, 0);
-      box-shadow: none;
-    }
-
-    to {
-      background-color: rgba(255, 255, 255, 0.11);
-      box-shadow: inset 0 0 1.5px 1.5px rgb(0, 0, 0);
-    }
-  }
-
-  @keyframes liquid-show-dark {
-    from {
-      backdrop-filter: blur(0);
-      -webkit-backdrop-filter: blur(0);
-      filter: none;
-    }
-
-    to {
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      filter: url("./filters/glass-distortion.svg#glass-distortion");
-    }
-  }
-
-
-  /* Estilos para los enlaces de navegación activos*/
-  /* Asegura que el a activo estire toda la altura del header-nav */
-  .active-navitem {
-    display: flex;
-    align-items: center;
-    color: #ff1818;
-    height: 100%;
-    /* a full height of .header‑nav */
-    padding: 0 1rem;
-    /* ajusta horizontal padding a tu gusto */
-    position: relative;
-    border-radius: 9999px;
-    transition: all 0.2s;
-  }
-
-  /* Global.css, dentro de @layer components */
-  /* Indicador deslizante */
-  .nav-indicator {
-    position: absolute;
-    bottom: 0;
-    /* alinea al pie del nav */
-    height: 100%;
-    /* cubre toda la altura del nav */
-    background: rgba(122, 122, 122, 0.322);
-    border-radius: 9999px;
-    transition: transform 0.3s ease, width 0.3s ease;
-    z-index: 0;
-    /* detrás de los enlaces */
-    width: 0;
-    /* empieza oculto hasta que se active */
-  }
-
-  /* Asegura que los enlaces estén por encima del indicador */
-  header nav>a {
-    z-index: 1;
   }
 
 

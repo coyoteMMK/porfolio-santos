@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import "../styles/global.css";
 
 const navItems = [
   {
@@ -45,55 +46,58 @@ const navItems = [
         <strong>Portfolio</strong> Santos
       </a>
       <nav class="relative flex items-center space-x-4 h-9/10">
-
-        {navItems.map((link) => (
-          <a
-            href={link.url}
-            aria-label={link.label}
-            class="relative  transition
+        <span
+        id="nav-indicator"
+  class="absolute bottom-0 h-full bg-[rgba(122,122,122,0.322)] rounded-full transition-[transform,width] duration-300 ease-in-out z-0 w-0 pointer-events-none"
+></span>
+        {
+          navItems.map((link) => (
+            <a
+              href={link.url}
+              aria-label={link.label}
+              class="relative  transition
                    hover:text-rose-500 dark:hover:text-rose-500"
-          >
-            {link.title}
-          </a>
-        ))}
+            >
+              {link.title}
+            </a>
+          ))
+        }
       </nav>
     </div>
 
     <!-- Ya no hace falta el <div> extra: aplicamos las clases directamente -->
-    <ThemeToggle
-      class="header-nav efecto-cristal md:p-3 p-2 ml-4"
-    />
+    <ThemeToggle class="header-nav efecto-cristal md:p-3 p-2 ml-4" />
   </div>
 </header>
 
-
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const nav      = document.querySelector('header nav');
-    const navLinks = Array.from(nav.querySelectorAll('a'));
-    const sections = document.querySelectorAll('section[id]');
+  document.addEventListener("DOMContentLoaded", () => {
+    const nav = document.querySelector("header nav");
+    const navLinks = Array.from(nav.querySelectorAll("a"));
+    const sections = document.querySelectorAll("section[id]");
 
-    // 1) Creamos e inyectamos el indicador
-    const indicator = document.createElement('span');
-    indicator.className = 'nav-indicator';
-    nav.insertBefore(indicator, nav.firstChild);
+    // 1) Seleccionamos el indicador ya existente en el DOM
+    const indicator = document.getElementById('nav-indicator');
 
     let currentActive = null;
 
     // 2) Función que desplaza el indicador a un enlace dado
     function moveIndicator(link) {
+      const paddingX = 12; // ancho extra a cada lado (en px)
+
       const linkRect = link.getBoundingClientRect();
-      const navRect  = nav.getBoundingClientRect();
-      const offsetX  = linkRect.left - navRect.left;
-      indicator.style.width     = `${linkRect.width}px`;
+      const navRect = nav.getBoundingClientRect();
+      const offsetX = linkRect.left - navRect.left - paddingX;
+
+      indicator.style.width = `${linkRect.width + paddingX * 2}px`;
       indicator.style.transform = `translateX(${offsetX}px)`;
     }
 
     // 3) Marca un enlace como activo (añade clase + mueve indicador)
     function setActiveLink(link) {
       if (!link || link === currentActive) return;
-      navLinks.forEach(l => l.classList.remove('active-navitem'));
-      link.classList.add('active-navitem');
+      navLinks.forEach((l) => l.classList.remove("active-navitem"));
+      link.classList.add("active-navitem");
       moveIndicator(link);
       currentActive = link;
     }
@@ -102,74 +106,185 @@ const navItems = [
     function updateActiveLink() {
       if (window.scrollY === 0) {
         currentActive = null;
-        navLinks.forEach(l => l.classList.remove('active-navitem'));
-        indicator.style.width = '0';
+        navLinks.forEach((l) => l.classList.remove("active-navitem"));
+        indicator.style.width = "0";
         return;
       }
 
-      let closest       = null;
-      let minDistance   = Infinity;
-      sections.forEach(sec => {
+      let closest = null;
+      let minDistance = Infinity;
+      sections.forEach((sec) => {
         const top = sec.getBoundingClientRect().top;
         if (top >= 0 && top < 200 && top < minDistance) {
           minDistance = top;
-          closest     = sec;
+          closest = sec;
         }
       });
 
-      if (!closest && window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+      if (
+        !closest &&
+        window.scrollY + window.innerHeight >= document.body.scrollHeight
+      ) {
         closest = sections[sections.length - 1];
       }
       if (closest) {
-        const link = navLinks.find(a => a.getAttribute('aria-label') === closest.id);
+        const link = navLinks.find(
+          (a) => a.getAttribute("aria-label") === closest.id,
+        );
         setActiveLink(link);
       }
     }
 
     // 5) Click en enlace: scroll suave + mover indicador
-navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      const href = link.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
+    navLinks.forEach((link) => {
+      link.addEventListener("click", function (e) {
+        const href = link.getAttribute("href");
+        if (!href || !href.startsWith("#")) return;
 
-      const id = href.slice(1);
-      const target = document.getElementById(id);
-      if (!target) return;
+        const id = href.slice(1);
+        const target = document.getElementById(id);
+        if (!target) return;
 
-      // Si ya estamos en esa sección, deja que el browser haga su scroll normal
-      if (window.location.hash === href) return;
+        // Si ya estamos en esa sección, deja que el browser haga su scroll normal
+        if (window.location.hash === href) return;
 
-      e.preventDefault();
+        e.preventDefault();
 
-      // Calcula altura del header fijo
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
+        // Calcula altura del header fijo
+        const header = document.querySelector("header");
+        const headerHeight = header ? header.offsetHeight : 0;
 
-      // Calcula posición absoluta del target
-      const targetRect = target.getBoundingClientRect();
-      const scrollTop = window.scrollY + targetRect.top - headerHeight;
+        // Calcula posición absoluta del target
+        const targetRect = target.getBoundingClientRect();
+        const scrollTop = window.scrollY + targetRect.top - headerHeight;
 
-      // Hace el scroll
-      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+        // Hace el scroll
+        window.scrollTo({ top: scrollTop, behavior: "smooth" });
 
-      // Cambia el hash de la URL después de un pequeño delay
-      setTimeout(() => {
-        history.replaceState(null, '', href);
-      }, 400);
+        // Cambia el hash de la URL después de un pequeño delay
+        setTimeout(() => {
+          history.replaceState(null, "", href);
+        }, 400);
+      });
     });
-  });
-
-
-
 
     // 6) Listeners scroll/resize
-    window.addEventListener('scroll', () => {
-      window.requestAnimationFrame(updateActiveLink);
-    }, { passive: true });
-    window.addEventListener('resize', updateActiveLink, { passive: true });
+    window.addEventListener(
+      "scroll",
+      () => {
+        window.requestAnimationFrame(updateActiveLink);
+      },
+      { passive: true },
+    );
+    window.addEventListener("resize", updateActiveLink, { passive: true });
 
     // 7) Inicial
     updateActiveLink();
   });
 </script>
 
+<style>
+  /* Efecto cristal líquido */
+  .efecto-cristal {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.75rem;
+    /* 28px */
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .efecto-cristal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    filter: url(#glass-distortion);
+    -webkit-filter: url(#glass-distortion);
+  }
+
+  .efecto-cristal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 20px -5px #ffffff;
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Asegura que el contenido quede por encima del pseudo-elemento */
+  .efecto-cristal > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Animaciones para el efecto cristal líquido del scroll */
+  @keyframes box-shadow-show {
+    from {
+      box-shadow: none;
+    }
+
+    to {
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.336);
+    }
+  }
+
+  @keyframes liquid-show {
+    from {
+      backdrop-filter: blur(0);
+      -webkit-backdrop-filter: blur(0);
+      filter: none;
+    }
+
+    to {
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      filter: url(#glass-distortion);
+    }
+  }
+
+  @keyframes tint-show {
+    from {
+      background-color: rgba(255, 255, 255, 0);
+      box-shadow: none;
+    }
+
+    to {
+      background-color: rgba(255, 255, 255, 0.418);
+      box-shadow: inset 0 0 1.5px 1.5px #ffffff;
+    }
+  }
+
+  @keyframes box-shadow-show-dark {
+    from {
+      box-shadow: none;
+    }
+
+    to {
+      box-shadow: 0 6px 24px rgba(136, 136, 136, 0.18);
+    }
+  }
+
+  @keyframes tint-show-dark {
+    from {
+      background-color: rgba(17, 24, 39, 0);
+      box-shadow: none;
+    }
+
+    to {
+      background-color: rgba(75, 74, 74, 0.26);
+      box-shadow: inset 0 0 1.5px 1.5px rgb(0, 0, 0);
+    }
+  }
+
+  /* Estilos para los enlaces de navegación activos*/
+  /* Asegura que el a activo estire toda la altura del header-nav */
+  .active-navitem {
+    color: #ff1818;
+    transition: all 0.2s;
+  }
+  
+</style>
