@@ -1,8 +1,12 @@
+---
+const { class: className } = Astro.props;
+---
 <a
-    class="inline-flex items-center justify-center gap-2 px-4 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-gray-900 hover:border-gray-700 hover:text-white dark:hover:bg-gray-100 dark:hover:border-gray-300 dark:hover:text-black group max-w-fit focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-2 active:bg-black"
+    style="clip-path: url(#squircleClip)"
+    class={`w-11 h-11 bg-gradient-to-br rounded-xl flex items-center justify-center shadow-lg border cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl ${className} `}	
     {...Astro.props}
     target="_blank"
     rel="noopener noreferrer"
->
+    >
     <slot />
 </a>

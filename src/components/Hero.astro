@@ -4,58 +4,78 @@ import Badge from "./Badge.astro";
 import LinkedinIcon from "./icons/Linkedin.astro";
 import GithubIcon from "./icons/Github.astro";
 import MailIcon from "./icons/Mail.astro";
+
+const Socialspills = [
+    {
+        link: "https://www.linkedin.com/in/santos-bernabeu-marroqu%C3%AD-aab13317a/",
+        class: "from-blue-600 to-blue-800 border-blue-500/50",
+        icon: LinkedinIcon,
+    },
+    {
+        link: "https://github.com/coyoteMMK",
+        class: "from-gray-700 to-gray-900 border-gray-600/50",
+        icon: GithubIcon,
+    },
+    {
+        link: "mailto:santosbaden@gmail.com",
+        class: "from-yellow-500 to-yellow-600 border-yellow-400/50",
+        icon: MailIcon,
+    },
+];
 ---
 
-<div class="flex flex-col md:flex-row items-center gap-8 max-w-5xl justify-center">
+<div
+    class="flex flex-col md:flex-row items-center gap-8 max-w-5xl justify-center"
+>
     <!-- Columna izquierda: imagen -->
-    <div class="flex-shrink-0 w-30 md:w-40">
+    <div class="flex-shrink-0 mr-5">
         <img
-            width="300"
-            height="300"
-            class="shadow-lg size-30 md:size-40 order-1 object-cover p-1 md:order-2 lg:p-2  aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20"
+            class="shadow-lg size-30 md:size-64 order-1 p-1 md:order-2 lg:p-2 object-cover aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20"
             src="/porfolio-santos/Santos_perfil.webp"
             alt="Santos photo"
         />
-        <h2
-            class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
-        >
-        <strong>Desarrollador Front-end</strong>
-        </h2>
     </div>
 
     <!-- Columna derecha: contenido -->
     <div class="flex flex-col justify-center">
         <h1
-            class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
+            class="text-3xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
         >
             Santos Bernabeu Marroquí
         </h1>
 
         <h2
-            class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+            class="mt-5 text-2xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
         >
-            Estudiante de <em>Ingeniería Informática</em> y <strong
-                >Desarrollador Front-end.</strong
-            >
-            En constante aprendizaje y mejora de mis habilidades. Soy de Alicante,
-            España 🏟️. Especialista en crear espacios únicos.
+            <strong>Desarrollador Front-end</strong>
         </h2>
 
-        <nav class="flex gap-4 mt-8 flex-wrap">
-            <SocialPill
-                href="https://www.linkedin.com/in/santos-bernabeu-marroqu%C3%AD-aab13317a/"
+        <h2
+            class="mt-5 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+        >
+            En constante aprendizaje y mejora de mis habilidades. Soy de
+            Alicante, España 🏟️. Especialista en crear espacios únicos.
+        </h2>
+
+        <!-- Nuevo SocialPuill nav -->
+        <nav
+            class="relative flex gap-4 mt-5 flex-wrap"
+        >
+            <!-- Fondo del contenedor de socialPill -->
+            <div
+                class="inset-0 relative flex items-end gap-x-4 p-2 bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl"
             >
-                <LinkedinIcon class="size-4 md:size-6" />
-                LinkedIN
-            </SocialPill>
-            <SocialPill href="https://github.com/coyoteMMK">
-                <GithubIcon class="size-4 md:size-6" />
-                Github
-            </SocialPill>
-            <SocialPill href="mailto:santosbaden@gmail.com">
-                <MailIcon class="size-4 md:size-6" />
-                Contáctame
-            </SocialPill>
+                {
+                    Socialspills.map((socialPill) => (
+                        <SocialPill
+                            class={socialPill.class}
+                            href={socialPill.link}
+                        >
+                            <socialPill.icon class="size-5 md:size-7" />
+                        </SocialPill>
+                    ))
+                }
+            </div>
         </nav>
     </div>
 </div>
