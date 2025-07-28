@@ -83,7 +83,7 @@ const navItems = [
     let firstRun = true;
 
     function moveIndicator(link) {
-      const paddingX = 12;
+      const paddingX = 10;
       const linkRect = link.getBoundingClientRect();
       const navRect = nav.getBoundingClientRect();
       const offsetX = linkRect.left - navRect.left - paddingX;
@@ -95,13 +95,11 @@ const navItems = [
     function setActiveLink(link) {
       if (!link || link === currentActive) return;
 
-      const isFirstLink = link === navLinks[0];
-
       navLinks.forEach((l) => l.classList.remove("active-navitem"));
       link.classList.add("active-navitem");
 
       // Si es el primer render y es el primer link, muestra sin transición
-      if (isFirstLink && indicatorHidden) {
+      if (indicatorHidden) {
         indicator.classList.remove("fade-out");
         indicator.classList.remove("fade-in");
         indicator.classList.add("fade-in");
@@ -141,8 +139,16 @@ const navItems = [
 
           // Finaliza el ocultamiento del indicador después del fade
           setTimeout(() => {
-            indicator.style.opacity = "0";
-            indicator.style.width = "0";
+            // Limpia clases y oculta instantáneamente sin transición visible
+            indicator.classList.remove("fade-out");
+            indicator.style.transition = "none"; // Desactiva transiciones
+            indicator.style.width = "0"; // Oculta el ancho
+
+            // Fuerza reflow para aplicar el cambio sin transición
+            void indicator.offsetWidth;
+
+            // Restaura la transición original
+            indicator.style.transition = "";
             indicatorHidden = true;
           }, 300);
         } else {
