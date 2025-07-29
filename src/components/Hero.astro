@@ -28,9 +28,9 @@ const Socialspills = [
     class="flex flex-col md:flex-row items-center gap-8 max-w-5xl justify-center"
 >
     <!-- Columna izquierda: imagen -->
-    <div class="flex-shrink-0 mr-5">
+    <div class="flex-shrink-0 mr-5 efecto-cristal rounded-2xl">
         <img
-            class="shadow-lg size-30 md:size-64 order-1 p-1 md:order-2 lg:p-2 object-cover aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20"
+            class="size-30 md:size-64 order-1 p-1 md:order-2 lg:p-2 object-cover rounded-2xl"
             src="/porfolio-santos/Santos_perfil.webp"
             alt="Santos photo"
         />
@@ -45,25 +45,23 @@ const Socialspills = [
         </h1>
 
         <h2
-            class="mt-5 text-2xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+            class="mt-5 text-2xl text-gray-800 dark:[&>strong]:text-rose-400 [&>strong]:text-rose-500 [&>strong]:font-semibold dark:text-gray-300"
         >
-            <strong>Desarrollador Front-end</strong>
+            <strong id="typewriter" class="typewriter-cursor"></strong>
         </h2>
 
         <h2
-            class="mt-5 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+            class="mt-5 text-xl text-gray-800 dark:[&>strong]:text-rose-400 [&>strong]:text-rose-500 [&>strong]:font-semibold dark:text-gray-300"
         >
             En constante aprendizaje y mejora de mis habilidades. Soy de
             Alicante, España 🏟️. Especialista en crear espacios únicos.
         </h2>
 
         <!-- Nuevo SocialPuill nav -->
-        <nav
-            class="relative flex gap-4 mt-5 flex-wrap"
-        >
+        <nav class="relative flex gap-4 mt-5 flex-wrap">
             <!-- Fondo del contenedor de socialPill -->
             <div
-                class="inset-0 relative flex items-end gap-x-4 p-2 bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl"
+                class="efecto-cristal rounded-2xl inset-0 relative flex items-end gap-x-4 p-2"
             >
                 {
                     Socialspills.map((socialPill) => (
@@ -79,3 +77,54 @@ const Socialspills = [
         </nav>
     </div>
 </div>
+
+<style>
+    .efecto-cristal::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        filter: url(#glass-distortion);
+        -webkit-filter: url(#glass-distortion);
+    }
+
+    @layer utilities {
+        .typewriter-cursor::after {
+            content: "|";
+            animation: blink 0.8s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const target = document.getElementById("typewriter");
+        const text = "Desarrollador Front-end";
+        const speed = 75; // velocidad en ms por letra
+
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                target.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, speed);
+            }
+        }
+
+        type();
+    });
+</script>

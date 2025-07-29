@@ -3,7 +3,41 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
-  
+
+  /* Efecto cristal líquido */
+  .efecto-cristal {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.75rem;
+    /* 28px */
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.336);
+  }
+
+  .efecto-cristal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background-color: rgba(255, 255, 255, 0.418);
+    box-shadow: inset 0 0 1.5px 1.5px #ffffff;
+  }
+
+  .dark .efecto-cristal {
+    box-shadow: 0 6px 24px rgba(255, 255, 255, 0.18);
+  }
+
+  .dark .efecto-cristal::before {
+    background-color: rgba(32, 32, 32, 0.322);
+    box-shadow: inset 0 0 1.5px 1.5px rgb(0, 0, 0);
+  }
+
+  /* Asegura que el contenido quede por encima del pseudo-elemento */
+  .efecto-cristal>* {
+    position: relative;
+    z-index: 2;
+  }
+
   /* Animaciones ligadas al scroll */
   .header-nav.efecto-cristal {
     animation: box-shadow-show 1s linear both;
@@ -35,6 +69,5 @@
     animation-timeline: scroll();
     animation-range: 0 200px;
   }
-
 
 }

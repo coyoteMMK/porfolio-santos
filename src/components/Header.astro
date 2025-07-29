@@ -234,15 +234,6 @@ const navItems = [
 </script>
 
 <style>
-  /* Efecto cristal líquido */
-  .efecto-cristal {
-    position: relative;
-    isolation: isolate;
-    border-radius: 1.75rem;
-    /* 28px */
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-  }
-
   .efecto-cristal::after {
     content: "";
     position: absolute;
@@ -253,22 +244,6 @@ const navItems = [
     -webkit-backdrop-filter: blur(2px);
     filter: url(#glass-distortion);
     -webkit-filter: url(#glass-distortion);
-  }
-
-  .efecto-cristal::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 0 20px -5px #ffffff;
-    background-color: rgba(255, 255, 255, 0.06);
-  }
-
-  /* Asegura que el contenido quede por encima del pseudo-elemento */
-  .efecto-cristal > * {
-    position: relative;
-    z-index: 2;
   }
 
   /* Animaciones para el efecto cristal líquido del scroll */
@@ -314,7 +289,7 @@ const navItems = [
     }
 
     to {
-      box-shadow: 0 6px 24px rgba(136, 136, 136, 0.18);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.18);
     }
   }
 
