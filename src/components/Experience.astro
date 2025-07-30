@@ -16,7 +16,6 @@ const EXPERIENCIE = [
         company: "Dia Group",
         description:
             "Colaborar en la implementación y mantenimiento de sistemas tecnológicos utilizados en el almacén, como software de gestión de inventario, sistemas de identificación por radiofrecuencia (RFID) y otros dispositivos electrónicos. Aprender a solucionar problemas técnicos y brindar soporte a los usuarios.",
-        link: "#",
     },
     {
         title: "Investigador de IA",
@@ -29,13 +28,13 @@ const EXPERIENCIE = [
 ];
 ---
 
-<ol class="relative mt-16">
+<ol class="relative mt-8">
     {
         // Recorremos el array de experiencias y lo mostramos
         // con el componente ExperienceItem
-        EXPERIENCIE.map((experiencie) => (
+        EXPERIENCIE.map((experiencie, i) => (
             <li class="">
-                <ExperienceItem {...experiencie} />
+                <ExperienceItem {...experiencie} position={i}/>
             </li>
         ))
     }
