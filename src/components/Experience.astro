@@ -34,7 +34,7 @@ const EXPERIENCIE = [
         // con el componente ExperienceItem
         EXPERIENCIE.map((experiencie, i) => (
             <li class="">
-                <ExperienceItem {...experiencie} position={i}/>
+                <ExperienceItem {...experiencie} position={i} isFirst={i === 0} isLast={i === EXPERIENCIE.length - 1}  />
             </li>
         ))
     }

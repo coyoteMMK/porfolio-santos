@@ -1,7 +1,11 @@
 ---
-const { href } = Astro.props
+const { href } = Astro.props;
 ---
 
-<a href={href} role="link" class="mt-5 inline-flex items-center text-lg font-medium text-yellow-500 dark:text-yellow-200 dark:hover:text-yellow-300 hover:text-yellow-700">
+<a
+  href={href}
+  role="link"
+  class="mt-5 inline-flex relative overflow-hidden text-gray-400 font-semibold rounded-full hover:px-4 py-2 hover:scale-110 scale-100 transition-all duration-400  ease-in-out hover:text-rose-500 hover:bg-[rgba(122,122,122,0.322)] dark:hover:dark:bg-[rgba(255,255,255,0.59)] hover:shadow-lg hover:backdrop-blur-sm"
+>
   <slot />
 </a>
