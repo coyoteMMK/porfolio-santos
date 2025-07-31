@@ -68,16 +68,18 @@ const PROYECTS = [
                 return (
                     <article
                         key={title}
-                        class={`efecto-cristal flex flex-col ${layoutClass} py-6 space-y-8 md:space-y-0 ${
-                            spanTwoCols ? "md:col-span-2 md:space-x-8" : ""
+                        class={`h-full efecto-cristal flex flex-col ${layoutClass} space-y-8 md:space-y-0 ${
+                            spanTwoCols ? "md:col-span-2 md:gap-0" : ""
                         } group`}
                     >
                         {/* Imagen: SIN padding, ocupa todo el lado derecho en md */}
-                        <div class={`w-full ${spanTwoCols ? "md:w-1/2" : ""}`}>
-                            <div class="relative h-full w-full shadow-xl overflow-hidden rounded-xl group-hover:-translate-y-1 group-hover:shadow-2xl transition duration-500 ease-in-out lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+                        <div
+                            class={`w-full ${spanTwoCols ? "md:w-1/2 h-full" : ""}`}
+                        >
+                            <div class="relative h-full w-full shadow-xl overflow-hidden rounded-2xl group-hover:-translate-y-1 group-hover:shadow-2xl transition duration-500 ease-in-out lg:border-none">
                                 <img
                                     alt={title}
-                                    class="object-cover object-top w-full h-full transition duration-500 md:scale-110 group-hover:scale-105"
+                                    class="object-cover object-top w-full h-full transition duration-500 group-hover:scale-105"
                                     loading="lazy"
                                     src={image}
                                 />
@@ -86,7 +88,7 @@ const PROYECTS = [
 
                         {/* Texto: CON padding si quieres margen interno solo aquí */}
                         <div
-                            class={`w-full ${spanTwoCols ? "md:w-1/2 md:max-w-lg" : ""} px-6`}
+                            class={`w-full ${spanTwoCols ? "md:w-1/2 md:max-w-lg" : ""} p-6`}
                         >
                             <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
                                 {title}
