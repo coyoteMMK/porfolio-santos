@@ -24,114 +24,86 @@ const TAGS = {
 
 const PROYECTS = [
     {
-        title: "Web test UMH - Apartado de test de la Universidad Miguel Hernández",
+        title: "Web test UMH",
         description:
-            "En esta web se pueden realizar test de diferentes asignaturas y ver los resultados obtenidos. Con aportaciones de los alumnos.",
-        link: "https://coyotemmk.github.io/test-umh.github.io/",
-        github: "https://github.com/coyoteMMK/test-umh.github.io",
-        image: "/porfolio-santos/proyects/Test_UMH.webp",
-        tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript],
-    },
-    {
-        title: "Web test UMH - Apartado de test de la Universidad Miguel Hernández",
-        description:
-            "En esta web se pueden realizar test de diferentes asignaturas y ver los resultados obtenidos. Con aportaciones de los alumnos.",
-        link: "https://coyotemmk.github.io/test-umh.github.io/",
-        github: "https://github.com/coyoteMMK/test-umh.github.io",
-        image: "/porfolio-santos/proyects/Test_UMH.webp",
-        tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript],
-    },
-    {
-        title: "Web test UMH - Apartado de test de la Universidad Miguel Hernández",
-        description:
-            "En esta web se pueden realizar test de diferentes asignaturas y ver los resultados obtenidos. Con aportaciones de los alumnos.",
-        link: "https://coyotemmk.github.io/test-umh.github.io/",
-        github: "https://github.com/coyoteMMK/test-umh.github.io",
-        image: "/porfolio-santos/proyects/Test_UMH.webp",
+            " Apartado de test de la Universidad Miguel Hernández. En esta web se pueden realizar test de diferentes asignaturas y ver los resultados obtenidos. Con aportaciones de los alumnos.",
+        link: "https://coyotemmk.github.io/test-umh/",
+        github: "https://github.com/coyoteMMK/test-umh",
+        image: "/porfolio-santos/proyects/test-web.webp",
         tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript],
     },
 ];
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {
-        PROYECTS.map(
-            (
-                { image, title, description, tags, link, github, important },
-                index,
-            ) => {
-                const isLastOdd =
-                    PROYECTS.length % 2 === 1 && index === PROYECTS.length - 1;
-                const spanTwoCols = important || isLastOdd;
-                const layoutClass = spanTwoCols ? "md:flex-row-reverse" : "";
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    {PROYECTS.map(({ image, title, description, tags, link, github, important }, index) => {
+        const isLastOdd = PROYECTS.length % 2 === 1 && index === PROYECTS.length - 1;
+        const spanTwoCols = important || isLastOdd;
+        const layoutClass = spanTwoCols ? "md:flex-row-reverse" : "";
 
-                return (
-                    <article
-                        key={title}
-                        class={`h-full efecto-cristal flex flex-col ${layoutClass} space-y-8 md:space-y-0 ${
-                            spanTwoCols ? "md:col-span-2 md:gap-0" : ""
-                        } group`}
-                    >
-                        {/* Imagen: SIN padding, ocupa todo el lado derecho en md */}
-                        <div
-                            class={`w-full ${spanTwoCols ? "md:w-1/2 h-full" : ""}`}
-                        >
-                            <div class="relative h-full w-full shadow-xl overflow-hidden rounded-2xl group-hover:-translate-y-1 group-hover:shadow-2xl transition duration-500 ease-in-out lg:border-none">
-                                <img
-                                    alt={title}
-                                    class="object-cover object-top w-full h-full transition duration-500 group-hover:scale-105"
-                                    loading="lazy"
-                                    src={image}
-                                />
-                            </div>
-                        </div>
+        return (
+            <article
+                key={title}
+                class={`h-full efecto-cristal flex flex-col ${layoutClass} ${
+                    spanTwoCols ? "md:col-span-2 md:gap-x-8" : ""
+                } group`}
+            >
+                {/* Imagen */}
+                <div class={`w-full ${spanTwoCols ? "md:w-1/2 h-full" : ""}`}>
+                    <div class={`relative h-full w-full shadow-xl overflow-hidden rounded-3xl transition duration-500 ease-in-out lg:border-none`}>
+                        <img
+                            alt={title}
+                            class="object-cover object-top w-full h-full transition duration-500 group-hover:scale-105"
+                            loading="lazy"
+                            src={image}
+                        />
+                    </div>
+                </div>
 
-                        {/* Texto: CON padding si quieres margen interno solo aquí */}
-                        <div
-                            class={`w-full ${spanTwoCols ? "md:w-1/2 md:max-w-lg" : ""} p-6`}
-                        >
-                            <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                                {title}
-                            </h3>
-                            <div class="flex flex-wrap mt-2">
-                                <ul class="flex flex-row mb-2 gap-x-2">
-                                    {tags.map((tag) => (
-                                        <li key={tag.name}>
-                                            <span
-                                                class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}
-                                            >
-                                                <tag.icon class="size-4" />
-                                                {tag.name}
-                                            </span>
-                                        </li>
-                                    ))}
-                                </ul>
+                {/* Contenido */}
+                <div class={`w-full ${spanTwoCols ? "md:w-1/2" : ""} flex flex-col justify-between p-6 space-y-4`}>
+                    <div>
+                        <h3 class="text-2xl font-bold text-rose-500">{title}</h3>
+                        <p class="mt-2 text-gray-700 dark:text-gray-400">
+                            {description}
+                        </p>
+                    </div>
 
-                                <div class="mt-2 text-gray-700 dark:text-gray-400">
-                                    {description}
-                                </div>
-                                <footer class="flex items-end justify-start mt-4 gap-x-4">
-                                    {github && (
-                                        <LinkButton href={github}>
-                                            <GitHub class="size-6" />
-                                            Code
-                                        </LinkButton>
-                                    )}
-                                    {link && (
-                                        <LinkButton href={link}>
-                                            <Link class="size-4" />
-                                            Preview
-                                        </LinkButton>
-                                    )}
-                                </footer>
-                            </div>
-                        </div>
-                    </article>
-                );
-            },
-        )
-    }
+                    <div class="flex flex-wrap mt-4 gap-2">
+                        <ul class="flex flex-wrap gap-2">
+                            {tags.map((tag) => (
+                                <li key={tag.name}>
+                                    <span
+                                        class={`flex items-center gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}
+                                    >
+                                        <tag.icon class="size-4" />
+                                        {tag.name}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <footer class="flex items-center gap-x-4 mt-4">
+                        {github && (
+                            <LinkButton href={github}>
+                                <GitHub class="size-6" />
+                                Code
+                            </LinkButton>
+                        )}
+                        {link && (
+                            <LinkButton href={link}>
+                                <Link class="size-4" />
+                                Preview
+                            </LinkButton>
+                        )}
+                    </footer>
+                </div>
+            </article>
+        );
+    })}
 </div>
+
 
 <div class="flex items-center justify-center w-full mt-18 text-gray-500">
     <p class="text-lg">¡Pronto más proyectos!</p>
