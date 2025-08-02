@@ -2,11 +2,33 @@
 const { href } = Astro.props;
 ---
 
-<a
-    target="_blank"
-    href={href}
-    role="link"
-    class="inline-flex bg-gray-100 text-gray-800 border-gray-300 items-center justify-center gap-2 px-3 py-2 space-x-2 text-base transition dark:text-white dark:bg-gray-800 border dark:border-gray-600 focus-visible:ring-yellow-500/80 text-md hover:bg-gray-800 hover:border-gray-900 group max-w-fit rounded-xl hover:text-white focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-2 active:bg-black"
+<div
+    class="group/button p-[4px] rounded-[16px] bg-gradient-to-b from-stone-300/40 to-transparent dark:from-gray-800/40"
 >
-    <slot />
-</a>
+    <a
+        href={href}
+        target="_blank"
+        role="link"
+        class="group/button p-[4px] rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.5)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.7)] active:scale-95 transition-all duration-300 inline-block
+    bg-gradient-to-b from-white to-stone-200/40
+    dark:from-gray-700 dark:to-gray-600
+    group-hover/button:from-gray-700 group-hover/button:to-gray-600
+    dark:group-hover/button:from-white dark:group-hover/button:to-stone-200/40
+    group-hover/button:shadow-[0_4px_8px_rgba(0,0,0,0.6)] dark:group-hover/button:shadow-[0_4px_8px_rgba(255,255,255,0.3)]"
+    >
+        <div
+            class="rounded-[8px] px-3 py-2
+      bg-gradient-to-b from-stone-200/40 to-white/80 dark:from-gray-600 dark:to-gray-700
+      group-hover/button:from-gray-600 group-hover/button:to-gray-800
+      dark:group-hover/button:from-stone-200/40 dark:group-hover/button:to-white/80 transition-all duration-300"
+        >
+            <div class="flex gap-2 items-center">
+                <span
+                    class="font-semibold inline-flex gap-2 items-center justify-center text-gray-800 dark:text-white group-hover/button:text-white dark:group-hover/button:text-gray-800"
+                >
+                    <slot />
+                </span>
+            </div>
+        </div>
+    </a>
+</div>
