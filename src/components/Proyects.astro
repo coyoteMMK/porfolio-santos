@@ -1,24 +1,28 @@
 ---
+import { boolean } from "astro:schema";
 import HtmlIcon from "./icons/Html.astro";
-import GitHub from "./icons/Github.astro";
-import Link from "./icons/Link.astro";
-import LinkButton from "./LinkButton.astro";
+import JsIcon from "./icons/Js.astro";
+import CssIcon from "./icons/Css.astro";
+import AstroIcon from "./icons/Astro.astro";
+
+import ProyectsItem from "./PoyectsItem.astro";
 
 const TAGS = {
     HTML: {
         name: "HTML",
-        class: "bg-white text-red-500",
         icon: HtmlIcon,
     },
     CSS: {
         name: "CSS",
-        class: "bg-blue-500 text-white",
-        icon: HtmlIcon,
+        icon: CssIcon,
     },
     JavaScript: {
         name: "JavaScript",
-        class: "bg-yellow-500  text-white",
-        icon: HtmlIcon,
+        icon: JsIcon,
+    },
+    Astro: {
+        name: "Astro",
+        icon: AstroIcon,
     },
 };
 
@@ -30,95 +34,62 @@ const PROYECTS = [
         link: "https://coyotemmk.github.io/test-umh/",
         github: "https://github.com/coyoteMMK/test-umh",
         image: "/porfolio-santos/proyects/test-web.webp",
+        tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.Astro],
+        important: false, // Proyecto destacado
+        isLastOdd: false,
+    },
+    {
+        title: "Web test UMH",
+        description:
+            " Apartado de test de la Universidad Miguel Hernández. En esta web se pueden realizar test de diferentes asignaturas y ver los resultados obtenidos. Con aportaciones de los alumnos.",
+        link: "https://coyotemmk.github.io/test-umh/",
+        github: "https://github.com/coyoteMMK/test-umh",
+        image: "/porfolio-santos/proyects/test-web.webp",
         tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript],
+        important: false, // Proyecto destacado
+    },
+    {
+        title: "Web test UMH",
+        description:
+            " Apartado de test de la Universidad Miguel Hernández. En esta web se pueden realizar test de diferentes asignaturas y ver los resultados obtenidos. Con aportaciones de los alumnos.",
+        link: "https://coyotemmk.github.io/test-umh/",
+        github: "https://github.com/coyoteMMK/test-umh",
+        image: "/porfolio-santos/proyects/test-web.webp",
+        tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript],
+        important: false, // Proyecto destacado
     },
 ];
+
+let normalCount = 0;
+
+PROYECTS.map((project) => {
+    const p = { ...project };
+
+    if (!p.important) {
+        normalCount++;
+    }
+
+    return p;
+});
+
+// Si hay un número impar de normales, el último normal debe ocupar dos columnas
+if (normalCount % 2 !== 0) {
+    // Buscar el último proyecto que no sea importante
+    // y marcarlo como importante para que ocupe dos columnas
+    // Esto asegura que el último proyecto normal ocupe dos columnas
+    for (let i = PROYECTS.length - 1; i >= 0; i--) {
+        if (!PROYECTS[i].important) {
+            PROYECTS[i] = { ...PROYECTS[i], important: true };
+            break;
+        }
+    }
+}
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-    {PROYECTS.map(({ image, title, description, tags, link, github, important }, index) => {
-        const isLastOdd = PROYECTS.length % 2 === 1 && index === PROYECTS.length - 1;
-        const spanTwoCols = important || isLastOdd;
-        const layoutClass = spanTwoCols ? "md:flex-row-reverse" : "";
-
-        return (
-            <article
-                key={title}
-                class={`h-full efecto-cristal flex flex-col ${layoutClass} ${
-                    spanTwoCols ? "md:col-span-2 md:gap-x-8" : ""
-                } group`}
-            >
-                {/* Imagen */}
-                <div class={`w-full ${spanTwoCols ? "md:w-1/2 h-full" : ""}`}>
-                    <div class={`relative h-full w-full shadow-xl overflow-hidden rounded-3xl transition duration-500 ease-in-out lg:border-none`}>
-                        <img
-                            alt={title}
-                            class="object-cover object-top w-full h-full transition duration-500 group-hover:scale-105"
-                            loading="lazy"
-                            src={image}
-                        />
-                    </div>
-                </div>
-
-                {/* Contenido */}
-                <div class={`w-full ${spanTwoCols ? "md:w-1/2" : ""} flex flex-col justify-between p-6 space-y-4`}>
-                    <div>
-                        <h3 class="text-2xl font-bold text-rose-500">{title}</h3>
-                        <p class="mt-2 text-gray-700 dark:text-gray-400">
-                            {description}
-                        </p>
-                    </div>
-
-                    <div class="flex flex-wrap mt-4 gap-2">
-                        <ul class="flex flex-wrap gap-2">
-                            {tags.map((tag) => (
-                                <li key={tag.name}>
-                                    <span
-                                        class={`flex items-center gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}
-                                    >
-                                        <tag.icon class="size-4" />
-                                        {tag.name}
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <footer class="flex items-center gap-x-4 mt-4">
-                        {github && (
-                            <LinkButton href={github}>
-                                <GitHub class="size-6" />
-                                Code
-                            </LinkButton>
-                        )}
-                        {link && (
-                            <LinkButton href={link}>
-                                <Link class="size-4" />
-                                Preview
-                            </LinkButton>
-                        )}
-                    </footer>
-                </div>
-            </article>
-        );
-    })}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:grid-flow-row-dense">
+    {PROYECTS.map((proyects, i) => <ProyectsItem {...proyects} />)}
 </div>
 
-
-<div class="flex items-center justify-center w-full mt-18 text-gray-500">
+<div class="flex items-center justify-center w-full mt-18 text-gray-500 dark:text-gray-300">
     <p class="text-lg">¡Pronto más proyectos!</p>
 </div>
-
-<style>
-    .efecto-cristal::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        border-radius: inherit;
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
-        filter: url(#glass-distortion);
-        -webkit-filter: url(#glass-distortion);
-    }
-</style>

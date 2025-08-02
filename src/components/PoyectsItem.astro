@@ -1,0 +1,103 @@
+---
+// src/components/ProyectItem.astro
+import GitHub from "./icons/Github.astro";
+import Link from "./icons/Link.astro";
+import LinkButton from "./LinkButton.astro";
+
+interface Props {
+    title: string;
+    description: string;
+    image: string;
+    link?: string;
+    github?: string;
+    tags: { name: string; class: string; icon: any }[];
+    important?: boolean; // Para proyectos destacados
+}
+
+const { title, description, image, link, github, tags, important } =
+    Astro.props;
+const spanTwoCols = important;
+const layoutClass = spanTwoCols ? "md:flex-row-reverse" : "";
+const spanClasses = spanTwoCols ? "md:col-span-2 md:col-start-1" : "";
+---
+
+<article
+    class={`h-full efecto-cristal flex flex-col ${layoutClass} ${spanClasses} group`}
+>
+    {/* Imagen */}
+    <div class={`w-full ${spanTwoCols ? "md:w-1/2 h-full" : ""}`}>
+        <div
+            class={`relative h-full w-full shadow-xl overflow-hidden rounded-3xl transition duration-500 ease-in-out lg:border-none`}
+        >
+            <img
+                alt={title}
+                class="object-cover object-top w-full h-full transition duration-500 group-hover:scale-105"
+                loading="lazy"
+                src={image}
+            />
+        </div>
+    </div>
+
+    {/* Contenido */}
+    <div
+        class={`w-full ${spanTwoCols ? "md:w-1/2 space-y-8 justify-center" : "space-y-4"} flex flex-col  p-6`}
+    >
+        <div>
+            <h3 class="text-2xl font-bold text-rose-500">{title}</h3>
+            <p class="mt-2 text-gray-700 dark:text-gray-400">
+                {description}
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+            <ul class="flex flex-wrap gap-2">
+                {
+                    tags.map((tag) => (
+                        <li key={tag.name}>
+                            <span
+                                class="flex items-center gap-x-2 rounded-full text-xs py-1 px-2 bg-rose-100 dark:bg-indigo-950 text-gray-700 dark:text-gray-300 shadow-lg dark:shadow-stone-900 hover:shadow-[0_0_10px_2px_rgba(244,63,94,0.7)] dark:hover:shadow-indigo-500
+transition duration-300"
+                            >
+                                <tag.icon class="size-4" />
+                                {tag.name}
+                            </span>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <footer class="flex items-center gap-x-4">
+            {
+                github && (
+                    <LinkButton href={github}>
+                        <GitHub class="size-6" />
+                        Code
+                    </LinkButton>
+                )
+            }
+            {
+                link && (
+                    <LinkButton href={link}>
+                        <Link class="size-4" />
+                        Preview
+                    </LinkButton>
+                )
+            }
+        </footer>
+    </div>
+</article>
+
+<style>
+    .efecto-cristal::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        filter: url(#glass-distortion);
+        -webkit-filter: url(#glass-distortion);
+    }
+</style>
