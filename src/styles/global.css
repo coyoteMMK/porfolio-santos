@@ -70,4 +70,48 @@
     animation-range: 0 200px;
   }
 
+  .fade-in-up-icon {
+    opacity: 0;
+    animation: fade-in-up 0.6s ease-out both;
+    animation-timeline: scroll();
+    animation-range: 300px 400px;
+  }
+
+  .Top-button.efecto-cristal {
+    animation: fade-in-up 0.6s ease-out both;
+    animation-timeline: scroll();
+    animation-range: 300px 400px;
+  }
+
+  .Top-button.efecto-cristal {
+    animation: box-shadow-show 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 300px 400px;
+  }
+
+  .Top-button.efecto-cristal::before {
+    animation: tint-show 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 300px 400px;
+  }
+
+  .Top-button.efecto-cristal::after {
+    animation: liquid-show 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 300px 400px;
+  }
+
+  /* Versión Oscura: animaciones ligadas al scroll SOLO en modo dark */
+  .dark .Top-button.efecto-cristal {
+    animation: box-shadow-show-dark 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 300px 400px;
+  }
+
+  .dark .Top-button.efecto-cristal::before {
+    animation: tint-show-dark 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 300px 400px;
+  }
+
 }

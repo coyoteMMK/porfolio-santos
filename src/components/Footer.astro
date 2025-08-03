@@ -2,29 +2,33 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer
-  class="opacity-80 m-4 min-[375px]:pl-4 md:pl-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10 flex justify-center"
->
-  <div
-    class="rounded-lg w-full max-w-screen-xl mx-auto md:flex md:items-center md:justify-between py-4"
-  >
-    <span class="text-sm sm:text-center text-zinc-800/90 dark:text-zinc-200/90"
-      >© {currentYear}
-      <a href="#" class="hover:underline">Santos</a>. Casi
-      todos los derechos reservados
+<footer class="mt-16 w-full backdrop-blur-md border-t border-rose-500/60 dark:border-rose-400/60 dark:bg-black/70 bg-white/70">
+  <div class="max-w-screen-xl mx-auto px-30 py-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    
+    <!-- Texto de derechos -->
+    <span class="text-sm text-zinc-800/90 dark:text-zinc-200/90 text-center md:text-left">
+      © {currentYear}
+      <a href="#" class="text-rose-500 dark:text-rose-400 hover:underline transition duration-300">Santos</a>. Casi todos los derechos reservados.
     </span>
-    <ul
-      class="flex flex-wrap items-center mt-3 text-sm font-medium text-black dark:text-zinc-200/90"
-    >
+
+    <!-- Enlaces -->
+    <ul class="flex flex-wrap justify-center items-center gap-4 text-sm font-medium text-zinc-700/90 dark:text-zinc-300">
       <li>
-        <a href="/porfolio-santos/#sobre-mi" class="hover:underline me-4 md:me-6">Sobre mí</a>
+        <a
+          href="/porfolio-santos/#sobre-mi"
+          class="hover:text-rose-400 transition duration-300"
+        >
+          Sobre mí
+        </a>
       </li>
       <li>
         <a
           id="contacto"
-          href="mailto:santosbaden@@gmail.com"
-          class="hover:underline">Contacto</a
+          href="mailto:santosbaden@gmail.com"
+          class="hover:text-rose-400 transition duration-300"
         >
+          Contacto
+        </a>
       </li>
     </ul>
   </div>
