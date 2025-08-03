@@ -70,6 +70,8 @@
     animation-range: 0 200px;
   }
 
+
+  /* Animacion para el boton de volver arriba */
   .fade-in-up-icon {
     opacity: 0;
     animation: fade-in-up 0.6s ease-out both;

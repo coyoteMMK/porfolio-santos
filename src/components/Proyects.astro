@@ -5,6 +5,7 @@ import JsIcon from "./icons/Js.astro";
 import CssIcon from "./icons/Css.astro";
 import AstroIcon from "./icons/Astro.astro";
 import PythonIcon from "./icons/Python.astro";
+import JsonIcon from "./icons/Json.astro";
 
 import ProyectsItem from "./PoyectsItem.astro";
 
@@ -28,6 +29,10 @@ const TAGS = {
     Python: {
         name: "Python",
         icon: PythonIcon,
+    },
+    Json: {
+        name: "JSON",
+        icon: JsonIcon,
     },
 };
 
@@ -57,11 +62,11 @@ const PROYECTS = [
     {
         title: "Fine-tuning Code-2",
         description:
-            "Proyecto de fine-tuning del lenguaje Code-2. Este proyecto utiliza técnicas de aprendizaje automático para mejorar la precisión del modelo de lenguaje Code-2.",
-        link: "https://huggingface.co/spaces/coyoteMMK/pruebaAI?logs=container",
+            "Proyecto de fine-tuning del lenguaje Code-2. Reentrenamiento del modelo T5-Small de Google para que aprenda a generar codigo en lenguaje Code-2 a traves de instrucciones LN que el usuario le aporta. Actualmente en desarrollo...",
+        link: "https://huggingface.co/coyoteMMK/CodeGPT",
         github: "",
-        image: "/porfolio-santos/proyects/Simulador_code2.webp",
-        tags: [TAGS.Python],
+        image: "/porfolio-santos/proyects/IA-code-2.webp",
+        tags: [TAGS.Python, TAGS.Json],
         important: true, // Proyecto destacado
         isLastOdd: false,
     },
