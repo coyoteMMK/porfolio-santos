@@ -4,6 +4,7 @@ import HtmlIcon from "./icons/Html.astro";
 import JsIcon from "./icons/Js.astro";
 import CssIcon from "./icons/Css.astro";
 import AstroIcon from "./icons/Astro.astro";
+import PythonIcon from "./icons/Python.astro";
 
 import ProyectsItem from "./PoyectsItem.astro";
 
@@ -23,6 +24,10 @@ const TAGS = {
     Astro: {
         name: "Astro",
         icon: AstroIcon,
+    },
+    Python: {
+        name: "Python",
+        icon: PythonIcon,
     },
 };
 
@@ -47,6 +52,17 @@ const PROYECTS = [
         image: "/porfolio-santos/proyects/Simulador_code2.webp",
         tags: [TAGS.HTML, TAGS.JavaScript],
         important: false, // Proyecto destacado
+        isLastOdd: false,
+    },
+    {
+        title: "Fine-tuning Code-2",
+        description:
+            "Proyecto de fine-tuning del lenguaje Code-2. Este proyecto utiliza técnicas de aprendizaje automático para mejorar la precisión del modelo de lenguaje Code-2.",
+        link: "https://huggingface.co/spaces/coyoteMMK/pruebaAI?logs=container",
+        github: "",
+        image: "/porfolio-santos/proyects/Simulador_code2.webp",
+        tags: [TAGS.Python],
+        important: true, // Proyecto destacado
         isLastOdd: false,
     },
 ];
