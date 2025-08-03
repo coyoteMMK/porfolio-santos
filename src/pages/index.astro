@@ -10,6 +10,7 @@ import Proyects from "../components/Proyects.astro";
 import TitleSection from "../components/TitleSection.astro";
 import Aboutme from "../components/Aboutme.astro";
 import ScrollToTop from '../components/ScrollToTop.astro';
+import Databricks from "../components/icons/Databricks.astro";
 ---
 
 <Layout
@@ -32,6 +33,15 @@ import ScrollToTop from '../components/ScrollToTop.astro';
 				<Experience />
 			</SectionContainer>
 
+			<SectionContainer id="conocimientos">
+				<TitleSection>
+					<Databricks class="size-8" />
+					Conocimientos / En construción...
+				</h2>
+				</TitleSection>
+				En construción...
+			</SectionContainer>
+
 			<SectionContainer id="proyectos">
 				<TitleSection>
 					<CodeIcon class="size-7" />
@@ -40,6 +50,8 @@ import ScrollToTop from '../components/ScrollToTop.astro';
 				</TitleSection>
 				<Proyects />
 			</SectionContainer>
+
+			
 
 			<SectionContainer id="sobre-mi">
 				<TitleSection>

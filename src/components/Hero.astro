@@ -4,6 +4,7 @@ import Badge from "./Badge.astro";
 import LinkedinIcon from "./icons/Linkedin.astro";
 import GithubIcon from "./icons/Github.astro";
 import MailIcon from "./icons/Mail.astro";
+import Download from "./Download.astro";
 
 const Socialspills = [
     {
@@ -53,15 +54,17 @@ const Socialspills = [
         <h2
             class="mt-5 text-xl text-gray-800 dark:[&>strong]:text-rose-400 [&>strong]:text-rose-500 [&>strong]:font-semibold dark:text-gray-300"
         >
-            En constante aprendizaje y mejora de mis habilidades. 
+            En constante aprendizaje y mejora de mis habilidades.
             <p>De📍Alicante, España. Especialista en crear espacios únicos.</p>
         </h2>
 
-        <!-- Nuevo SocialPuill nav -->
-        <nav class="relative flex gap-4 mt-5 flex-wrap justify-center md:justify-start">
-            <!-- Fondo del contenedor de socialPill -->
-            <div
-                class="efecto-cristal rounded-2xl inset-0 relative flex items-end gap-x-4 p-2"
+        <!-- Contenedor común para pills + botón -->
+        <div
+            class="relative flex gap-7 mt-5 flex-wrap justify-center md:justify-start items-center"
+        >
+            <!-- Social Pills dentro del nav efecto-cristal -->
+            <nav
+                class="efecto-cristal rounded-2xl relative flex items-end gap-x-4 p-2"
             >
                 {
                     Socialspills.map((socialPill) => (
@@ -73,8 +76,13 @@ const Socialspills = [
                         </SocialPill>
                     ))
                 }
-            </div>
-        </nav>
+            </nav>
+
+            <!-- Botón completamente fuera del nav -->
+            <Download href="/porfolio-santos/CV_SantosBernabeu.pdf">
+                Descargar CV
+            </Download>
+        </div>
     </div>
 </div>
 

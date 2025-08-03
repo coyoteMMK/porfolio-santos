@@ -1,0 +1,16 @@
+---
+import DowloadIcon from "./icons/DowloadIcon.astro";
+
+const { href } = Astro.props;
+---
+
+<a
+    href={href}
+    download
+    class="group relative inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-rose-500 hover:bg-rose-700 dark:bg-rose-500 dark:hover:bg-rose-700 transition shadow-md dark:shadow-stone-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 duration-150 ease-in-out"
+>
+    <span class="flex gap-2 items-center ">
+        <DowloadIcon></DowloadIcon>
+        <slot />
+    </span>
+</a>
