@@ -7,7 +7,7 @@ import Badge from "../components/Badge.astro";
   class="flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row"
 >
   <div
-    class="[&>p]:mb-4 [&>p>strong]:text-yellow-500 dark:[&>p>strong]:text-yellow-100 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-none"
+    class="[&>p]:mb-4 [&>p>strong]:text-rose-500 dark:[&>p>strong]:text-rose-400 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-none"
   >
     <p>
       Estudiante de <em>Ingeniería Informática</em> y <strong
@@ -31,20 +31,23 @@ import Badge from "../components/Badge.astro";
       todo un éxito.
     </p>
   </div>
-  
-  <span class="relative inline-flex overflow-hidden rounded-full p-[2px] order-1 md:order-none shrink-0">
+
+  <span
+    class="relative inline-flex items-center justify-center rounded-full p-[6px] order-1 md:order-none shrink-0"
+  >
+    <!-- Fondo animado con blur -->
     <span
-      class="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-conic/[from_0deg] from-white to-white dark:from-black via-green-400 dark:to-black"
+      class="inset-0 blur-md opacity-90 rounded-full absolute z-0 animate-[spin_5s_linear_infinite] bg-conic-0 from-white to-white dark:from-black via-rose-500 dark:via-rose-400 dark:to-black"
     ></span>
+
+    <!-- Imagen principal -->
     <img
       width="200"
       height="200"
       src="/porfolio-santos/Santos_2.webp"
       alt={personalImageAlt}
-      class="relative object-cover size-50 md:size-64 rounded-full bg-black/20 dark:bg-yellow-500/5 shrink-0"
+      class="relative object-cover z-10 size-50 md:size-64 rounded-full"
       style="object-position: 50% 50%"
     />
   </span>
-
 </article>
-
