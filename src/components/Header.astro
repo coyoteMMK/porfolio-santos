@@ -22,8 +22,8 @@ const navItems = [
 ---
 
 <header
-  class="fixed top-0 z-10 w-full py-1 md:py-2 font-medium
-         text-gray-800 dark:text-blue-200 bg-transparent px-4"
+  class="fixed top-0 z-10 w-full mt-3 md:mt-2 font-medium
+         text-gray-800 dark:text-blue-200 bg-transparent px-4 md:px-0 mx-auto justify-center items-center"
 >
   <div
     class="flex items-center justify-between
@@ -45,7 +45,7 @@ const navItems = [
       >
         <strong>Portfolio</strong> Santos
       </a>
-      <nav class="relative flex items-center space-x-4 h-9/10">
+      <nav class="relative flex w-full md:w-auto items-center justify-between md:space-x-4 h-9/10">
         <span
           id="nav-indicator"
           class="absolute bottom-0 h-full bg-[rgba(122,122,122,0.322)] rounded-full transition-[transform,width] dark:bg-[rgba(255,255,255,0.59)] duration-300 ease-in-out z-0 w-0 pointer-events-none"
@@ -56,7 +56,7 @@ const navItems = [
               href={link.url}
               aria-label={link.label}
               class="relative  transition
-                   hover:text-rose-500 dark:hover:text-rose-500"
+                   hover:text-rose-500 dark:hover:text-rose-500 max-w-full"
             >
               {link.title}
             </a>
