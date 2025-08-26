@@ -7,11 +7,11 @@ import LinkButton from "./LinkButton.astro";
 interface Props {
     title: string;
     description: string;
+    link: string;
+    github: string;
     image: string;
-    link?: string;
-    github?: string;
-    tags: { name: string; class: string; icon: any }[];
-    important?: boolean; // Para proyectos destacados
+    tags: { name: string; icon: (_props: Record<string, any>) => any }[];
+    important: boolean;
 }
 
 const { title, description, image, link, github, tags, important } =
@@ -53,15 +53,17 @@ const spanClasses = spanTwoCols ? "md:col-span-2 md:col-start-1" : "";
             <ul class="flex flex-wrap gap-2">
                 {
                     tags.map((tag) => (
-                        <li key={tag.name}>
-                            <span
-                                class="flex items-center gap-x-2 rounded-full text-xs py-1 px-2 bg-rose-100 dark:bg-indigo-950 text-gray-700 dark:text-gray-300 shadow-lg dark:shadow-stone-900 hover:shadow-[0_0_10px_2px_rgba(244,63,94,0.7)] dark:hover:shadow-indigo-500
+                        <>
+                            <li>
+                                <span
+                                    class="flex items-center gap-x-2 rounded-full text-xs py-1 px-2 bg-rose-100 dark:bg-indigo-950 text-gray-700 dark:text-gray-300 shadow-lg dark:shadow-stone-900 hover:shadow-[0_0_10px_2px_rgba(244,63,94,0.7)] dark:hover:shadow-indigo-500
 transition duration-300"
-                            >
-                                <tag.icon class="size-4" />
-                                {tag.name}
-                            </span>
-                        </li>
+                                >
+                                    <tag.icon class="size-4" />
+                                    {tag.name}
+                                </span>
+                            </li>
+                        </>
                     ))
                 }
             </ul>
